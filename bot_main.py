@@ -30,8 +30,8 @@ def ask_gpt(income):
 def send_reply(chat_id, message):
     """Функция отправки ответа от ChatGPT в чат с эффектом 'бот пишет'"""
     bot.send_chat_action(chat_id, action='typing')
-    ask_gpt(message)
-    bot.send_message(chat_id, message)
+    reply: str = ask_gpt(message)
+    bot.send_message(chat_id, reply)
 
 
 # Триггер на новые сообщения в чате
