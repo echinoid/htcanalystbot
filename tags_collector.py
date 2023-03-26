@@ -53,7 +53,7 @@ def db_tag_list_update(tags: list):
             sql = "SELECT tag FROM confluence_tags"
             cursor.execute(sql)
             result = cursor.fetchall()
-            result_list = [['tag'] for row in result]
+            result_list = [row['tag'] for row in result]
 
         not_in_db_list = [tag for tag in tags if tag not in result_list]
         for tag in not_in_db_list:
