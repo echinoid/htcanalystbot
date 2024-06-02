@@ -7,14 +7,13 @@ import telebot
 import re
 
 # Читаем конфиг
-with open('config_dvakota.json', "r", encoding="utf-8") as file:
+with open('config.json', "r", encoding="utf-8") as file:
     config = json.load(file)
 
 client = OpenAI(api_key=config['gpt_api_key'])
 bot = telebot.TeleBot(config['bot_api_key'])
 
 BOT_PERSONALITY = config['bot_personality']
-noreply: bool
 
 
 def escape_markdown_v2(text):
@@ -85,6 +84,7 @@ def handle_image(message):
 def smart_reply(message):
     """Функция ответа через ChatGPT"""
     user_id = message.from_user.id
+    noreply: bool = False
 
     if message.content_type == 'photo':
         # Обрабатываем полученное изображение
@@ -98,7 +98,7 @@ def smart_reply(message):
                 print(message.from_user.username + ' - ' + content + '\n', file=f)
 
         if content.startswith("/generate"):
-            noreply: bool = True
+            noreply = True
             # Генерация изображения по запросу
             prompt = content.replace("/generate", "").strip()
             if prompt:
